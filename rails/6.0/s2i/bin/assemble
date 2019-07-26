@@ -42,6 +42,10 @@ if [ -f Gemfile ]; then
     ADDTL_BUNDLE_ARGS+=" --without $BUNDLE_WITHOUT"
   fi
   
+  pwd
+  gem env
+  gem list
+
   echo "---> Running 'bundle install ${ADDTL_BUNDLE_ARGS}' ..."
   bundle install --path ./bundle ${ADDTL_BUNDLE_ARGS}
 
