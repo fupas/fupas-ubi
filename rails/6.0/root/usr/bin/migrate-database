@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+RAKE_DB_SEED=${RAKE_DB_SEED:-"false"}
+
 # unset $VERSION, otherwise migrations won't work ...
 # see https://stackoverflow.com/questions/25141782/rails-rake-dbmigrate-doesnt-work-nothing-happens
 unset VERSION
@@ -8,7 +10,9 @@ unset VERSION
 echo "---> Executing bundle exec 'rake db:migrate' ..."
 bundle exec rake db:migrate
 
-if [ "$RAKE_EXTRA_CMD" == "DB_SEED" ]; then
+if [ "$RAKE_DB_SEED" == "false" ]; then
+  echo "---> Skipping bundle exec 'rake db:seed' ..."
+else
   echo "---> Executing bundle exec 'rake db:seed' ..."
   bundle exec rake db:seed
 fi
