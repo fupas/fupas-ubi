@@ -54,9 +54,13 @@ if ! bundle exec rackup -h &>/dev/null; then
   echo "         Add rack to your Gemfile in order to start the web server."
 fi
 
-echo "---> Preparing webpacker ..."
-bundle exec rake webpacker:info
-bundle exec rake webpacker:install
+WEBPACKER=${WEBPACKER:-"none"}
+if [ "$WEBPACKER" == "none" ]; then
+  echo "---> Skipping webpacker ..."
+then
+  echo "---> Installing webpacker ..."
+  bundle exec rake webpacker:install:$WEBPACKER
+fi
 
 if [[ "$RAILS_ENV" == "production" || "$RACK_ENV" == "production" ]]; then
   rake_assets_precompile
