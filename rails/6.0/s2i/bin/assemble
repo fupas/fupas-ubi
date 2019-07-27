@@ -60,7 +60,7 @@ fi
 WEBPACKER=${WEBPACKER:-"none"}
 if [ "$WEBPACKER" == "none" ]; then
   echo "---> Skipping webpacker ..."
-then
+else
   echo "---> Installing webpacker ..."
   bundle exec rake webpacker:install:$WEBPACKER
 fi
