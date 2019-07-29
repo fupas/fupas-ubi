@@ -24,6 +24,10 @@ echo "---> Installing application source ..."
 mv /tmp/src/* ./
 
 echo "---> Adding database.yaml ..."
+pwd
+ls -la
+ls -la ./config
+ 
 rm ./config/database.yaml
 cp /opt/app-root/database.yaml ./config/database.yaml
 
