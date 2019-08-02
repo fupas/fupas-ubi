@@ -24,9 +24,6 @@ echo "---> Installing application source ..."
 cp -Rf /tmp/src/* ./
 
 echo "---> Adding database.yaml ..."
-#rm ./config/database.yml
-
-echo "---> BP1 ..."
 if grep -q pg Gemfile; then
   echo "---> Using Postgresql database.yaml template ..."
   cp -f /opt/app-root/database.pg.yml ./config/database.yml
@@ -36,6 +33,7 @@ else
 fi
 
 gem env
+gem list
  
 echo "---> Building your Ruby application from source ..."
 if [ -f Gemfile ]; then
