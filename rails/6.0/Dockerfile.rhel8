@@ -81,8 +81,8 @@ RUN chown -R 1001:0 ${APP_ROOT} && chmod -R ug+rwx ${APP_ROOT} && \
 USER 1001
 
 # Install bundler & RAILS
-RUN gem install bundler -v $BUNDLER_VERSION
-RUN gem install rails -v $RAILS_VERSION
+RUN gem install bundler -v $BUNDLER_VERSION --no-document
+RUN gem install rails -v $RAILS_VERSION --no-document
 RUN gem env
 
 # Set the default CMD to print the usage of the language image
