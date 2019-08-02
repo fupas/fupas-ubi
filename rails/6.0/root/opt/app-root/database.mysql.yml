@@ -2,7 +2,7 @@
 <% db_service = ENV.fetch("DATABASE_SERVICE_NAME","").upcase %>
 
 production:
-  adapter: postgresql
+  adapter: mysql2
   encoding: unicode
   database: <%= ENV["DATABASE_NAME"] %>
   username: <%= ENV["DATABASE_USER"] %>
