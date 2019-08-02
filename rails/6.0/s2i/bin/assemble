@@ -52,12 +52,20 @@ if [ -f Gemfile ]; then
     ADDTL_BUNDLE_ARGS+=" --without $BUNDLE_WITHOUT"
   fi
   
+  if [ -n "$EXTRA_GEMS" ]; then
+    echo "---> Injecting extra gems '${EXTRA_GEMS}' ..."
+    IFS=', ' read -r -a array <<< "$EXTRA_GEMS"
+    for element in "${array[@]}"
+    do
+      echo "gem '$element'" >> Gemfile
+    done
+  fi
+
   echo "---> Running 'bundle install ${ADDTL_BUNDLE_ARGS}' ..."
   bundle install --path ./bundle ${ADDTL_BUNDLE_ARGS}
-  #bundle install ${ADDTL_BUNDLE_ARGS}
 
   echo "---> Cleaning up unused ruby gems ..."
-  #bundle clean -V
+  bundle clean -V
 fi
 
 if ! bundle exec rackup -h &>/dev/null; then
