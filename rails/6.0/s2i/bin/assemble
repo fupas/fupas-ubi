@@ -24,8 +24,9 @@ echo "---> Installing application source ..."
 
 ls -la /tmp/src
 ls -la ./
+ls -la ./bin
 pwd
- 
+
 #mv /tmp/src/* ./
 while true
 do
