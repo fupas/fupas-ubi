@@ -97,7 +97,7 @@ items:
   metadata:
     annotations:
       description: Exposes the database server
-    name: 'db'
+    name: 'postgresql'
     labels:
       app: rails-bootstrap
   spec:

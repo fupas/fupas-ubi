@@ -33,7 +33,14 @@ items:
       spec:
         containers:
           - env:
+              # app
+              - name: APPLICATION_HOSTNAME
+                value: 'www.example.com'
+              - name: DOMAIN_NAME
+                value: 'example.com'
               # database, user etc
+              - name: DATABASE_SERVICE_NAME
+                value: 'postgresql'
               - name: DATABASE_NAME
                 valueFrom:
                   secretKeyRef:
@@ -54,63 +61,46 @@ items:
                 value: '50'
               - name: POSTGRESQL_SHARED_BUFFERS
                 value: '12MB'
-            
-              # SMTP
+              # smtp
               - name: SMTP_PROVIDER_HOST
                 valueFrom:
                   secretKeyRef:
                     key: smtp-provider-host
                     name: rails-bootstrap-secrets
-
               - name: SMTP_PROVIDER_DOMAIN
                 valueFrom:
                   secretKeyRef:
                     key: smtp-provider-domain
                     name: rails-bootstrap-secrets
-
               - name: SMTP_PROVIDER_USERNAME
                 valueFrom:
                   secretKeyRef:
                     key: smtp-provider-username
                     name: rails-bootstrap-secrets
-
               - name: SMTP_PROVIDER_PASSWORD
                 valueFrom:
                   secretKeyRef:
                     key: smtp-provider-password
                     name: rails-bootstrap-secrets
-              
-              # RAILS
-              - name: APPLICATION_HOSTNAME
-                value: 'www.example.com'
-
-              - name: DOMAIN_NAME
-                value: 'example.com'
-
+              # rails
               - name: RAILS_ENV
                 value: 'production'
-              
               - name: RAILS_LOG_LEVEL
                 value: 'warn'
-
               - name: SECRET_KEY_BASE
                 valueFrom:
                   secretKeyRef:
                     key: keybase
                     name: rails-bootstrap-secrets
-
               - name: REQUIRE_RAILS_MASTER_KEY
                 value: 'false'
-
               - name: RAILS_MASTER_KEY
                 valueFrom:
                   secretKeyRef:
                     key: rails-master-key
                     name: rails-bootstrap-secrets
-              
               - name: RAILS_SERVE_STATIC_FILES
                 value: 'true'
-              
               - name: RAILS_ENFORCE_SSL
                 value: 'false'
             
@@ -153,7 +143,7 @@ items:
   metadata:
     annotations:
       description: Exposes and load balances the application pods
-      service.alpha.openshift.io/dependencies: '[{"name": "db", "kind": "Service"}]'
+      service.alpha.openshift.io/dependencies: '[{"name": "${DATABASE_SERVICE_NAME}", "kind": "Service"}]'
     name: rails-bootstrap
     labels:
       app: rails-bootstrap

@@ -44,6 +44,8 @@ items:
       sourceStrategy:
         env:
           # database, user etc
+          - name: DATABASE_SERVICE_NAME
+            value: 'postgresql'
           - name: DATABASE_NAME
             valueFrom:
               secretKeyRef:
