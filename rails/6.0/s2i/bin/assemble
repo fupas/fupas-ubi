@@ -21,31 +21,12 @@ fi
 
 shopt -s dotglob
 echo "---> Installing application source ..."
-
-ls -la /tmp/src
 cp -Rf /tmp/src/* ./
-
-#rm /tmp/src/bin
-
-pwd
-ls -la
-ls -la ./bin
-ls -la ./config
-
-#ls -la /tmp/src
-
-#mv /tmp/src/* ./
-
-#while true
-#do
-#	echo "..."
-#	sleep 10
-#done
 
 echo "---> Adding database.yaml ..."
 rm ./config/database.yml
 DATABASE = `grep mysql Gemfile`
-f [ "$DATABASE" == "" ]; then
+if [ "$DATABASE" == "" ]; then
   echo "---> Using Postgresql database.yaml template ..."
   cp /opt/app-root/database.pg.yml ./config/database.yml
 else
