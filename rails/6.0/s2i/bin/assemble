@@ -22,17 +22,18 @@ fi
 shopt -s dotglob
 echo "---> Installing application source ..."
 
-ls -la /tmp/src
-ls -la ./
-ls -la ./bin
-pwd
+cp -Rf /tmp/src/bin/ ./bin
+rm /tmp/src/bin
 
-#mv /tmp/src/* ./
-while true
-do
-	echo "..."
-	sleep 10
-done
+ls -la ./bin
+ls -la /tmp/src
+
+mv /tmp/src/* ./
+#while true
+#do
+#	echo "..."
+#	sleep 10
+#done
 
 echo "---> Adding database.yaml ..."
 rm ./config/database.yml
