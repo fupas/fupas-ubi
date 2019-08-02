@@ -24,16 +24,15 @@ echo "---> Installing application source ..."
 cp -Rf /tmp/src/* ./
 
 echo "---> Adding database.yaml ..."
-rm ./config/database.yml
+#rm ./config/database.yml
 
-DB_TYPE=`grep mysql Gemfile`
-echo "-$DB_TYPE-"
-if [ "$DB_TYPE" == "" ]; then
+echo "---> BP1 ..."
+if grep -q pg Gemfile; then
   echo "---> Using Postgresql database.yaml template ..."
-  cp /opt/app-root/database.pg.yml ./config/database.yml
+  cp -f /opt/app-root/database.pg.yml ./config/database.yml
 else
   echo "---> Using MySQL database.yaml template ..."
-  cp /opt/app-root/database.mysql.yml ./config/database.yml
+  cp -f /opt/app-root/database.mysql.yml ./config/database.yml
 fi
 
 gem env
