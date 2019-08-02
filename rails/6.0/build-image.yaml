@@ -5,7 +5,12 @@ items:
 - kind: BuildConfig
   apiVersion: 'v1'
   metadata:
-    name: 'ubi8-rails' 
+    name: 'ubi8-rails'
+    annotations:
+      description: RAILS 6 base image for everything
+      tags: ruby rails
+    labels:
+      runtime: ruby
   spec:
     
     runPolicy: 'Serial' 
@@ -40,8 +45,10 @@ items:
 - kind: ImageStream
   apiVersion: 'v1'
   metadata:
+    name: 'ubi8-rails'
     annotations:
       description: RAILS base image for everything
       tags: ruby rails
-    name: 'ubi8-rails'
+    labels:
+      runtime: ruby
     namespace: openshift
