@@ -43,16 +43,17 @@ items:
     strategy:
       sourceStrategy:
         env:
-          # Database          
+          # database, user etc
           - name: DATABASE_NAME
-            value: 'root'
-            
+            valueFrom:
+              secretKeyRef:
+                key: database-name
+                name: rails-bootstrap-secrets
           - name: DATABASE_USER
             valueFrom:
               secretKeyRef:
                 key: database-user
                 name: rails-bootstrap-secrets
-          
           - name: DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:
