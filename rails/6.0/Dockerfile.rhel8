@@ -82,6 +82,7 @@ USER 1001
 
 # Install bundler & RAILS
 RUN gem install bundler -v $BUNDLER_VERSION --no-document
+RUN gem install rdoc --no-document
 RUN bundle install --path ./bundle --without development:test
 
 # Set the default CMD to print the usage of the language image
