@@ -33,8 +33,13 @@ if [ -f Gemfile ]; then
   ADDTL_BUNDLE_ARGS="--retry 2"
   
   if [ -f Gemfile.lock ]; then
-    if [[ "$BUNDLE_WITHOUT_DEPLOYMENT" == "true" ]]; then
-      echo "---> Building without '--deployment' option ..."
+    if [ -n "$EXTRA_GEMS" ]; then
+      echo "---> Injecting extra gems '${EXTRA_GEMS}' ..."
+      IFS=', ' read -r -a array <<< "$EXTRA_GEMS"
+      for element in "${array[@]}"
+      do
+        echo "gem '$element'" >> Gemfile
+      done
     else
       ADDTL_BUNDLE_ARGS+=" --deployment"
     fi
@@ -52,17 +57,8 @@ if [ -f Gemfile ]; then
     ADDTL_BUNDLE_ARGS+=" --without $BUNDLE_WITHOUT"
   fi
   
-  if [ -n "$EXTRA_GEMS" ]; then
-    echo "---> Injecting extra gems '${EXTRA_GEMS}' ..."
-    IFS=', ' read -r -a array <<< "$EXTRA_GEMS"
-    for element in "${array[@]}"
-    do
-      echo "gem '$element'" >> Gemfile
-    done
-  fi
-
   echo "---> Running 'bundle install ${ADDTL_BUNDLE_ARGS}' ..."
-  bundle install --path ./bundle ${ADDTL_BUNDLE_ARGS}
+  bundle install --path $BUNDLE_DIR ${ADDTL_BUNDLE_ARGS}
 
   echo "---> Cleaning up unused ruby gems ..."
   bundle clean -V
