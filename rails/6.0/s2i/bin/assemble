@@ -4,8 +4,7 @@ function rake_assets_precompile() {
   [[ "$DISABLE_ASSET_COMPILATION" == "true" ]] && return
   
   echo "---> Starting asset compilation ..."
-  #bundle exec rake assets:precompile
-  rake assets:precompile
+  bundle exec rake assets:precompile
 }
 
 set -e
@@ -76,9 +75,6 @@ fi
 
 if [[ "$RAILS_ENV" == "production" || "$RACK_ENV" == "production" ]]; then
   rake_assets_precompile
-  if [ -n "$EXTRA_RAKE_TASKS" ]; then
-    bundle exec rake $EXTRA_RAKE_TASKS
-  fi
 fi
 
 # Fix source directory permissions
