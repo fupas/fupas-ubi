@@ -56,7 +56,7 @@ if [ -f Gemfile ]; then
   bundle install --path ./bundle ${ADDTL_BUNDLE_ARGS}
 
   echo "---> Cleaning up unused ruby gems ..."
-  bundle clean -V
+  #bundle clean -V
 fi
 
 if [ -n "$EXTRA_GEMS" ]; then
