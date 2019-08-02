@@ -53,7 +53,8 @@ if [ -f Gemfile ]; then
   fi
   
   echo "---> Running 'bundle install ${ADDTL_BUNDLE_ARGS}' ..."
-  bundle install --path ./bundle ${ADDTL_BUNDLE_ARGS}
+  #bundle install --path ./bundle ${ADDTL_BUNDLE_ARGS}
+  bundle install ${ADDTL_BUNDLE_ARGS}
 
   echo "---> Cleaning up unused ruby gems ..."
   #bundle clean -V
