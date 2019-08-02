@@ -1,0 +1,181 @@
+apiVersion: v1
+items:
+
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      description: Defines how to deploy the application server
+      template.alpha.openshift.io/wait-for-ready: 'true'
+    name: rails-bootstrap
+    labels:
+      app: rails-bootstrap
+  spec:
+    replicas: 1
+    selector:
+      name: rails-bootstrap
+    strategy:
+      type: Recreate
+      recreateParams:
+        pre:
+          execNewPod:
+            command:
+              - migrate-database
+            containerName: rails-bootstrap
+          failurePolicy: Ignore
+      
+    template:
+      metadata:
+        name: rails-bootstrap
+        labels:
+          name: rails-bootstrap
+          app: rails-bootstrap
+      spec:
+        containers:
+          - env:
+              # database, user etc
+              - name: DATABASE_NAME
+                valueFrom:
+                  secretKeyRef:
+                    key: database-name
+                    name: rails-bootstrap-secrets
+              - name: DATABASE_USER
+                valueFrom:
+                  secretKeyRef:
+                    key: database-user
+                    name: rails-bootstrap-secrets
+              - name: DATABASE_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    key: database-password
+                    name: rails-bootstrap-secrets
+              # db connection parameters
+              - name: MAX_CONNECTIONS
+                value: '50'
+              - name: POSTGRESQL_SHARED_BUFFERS
+                value: '12MB'
+            
+              # SMTP
+              - name: SMTP_PROVIDER_HOST
+                valueFrom:
+                  secretKeyRef:
+                    key: smtp-provider-host
+                    name: rails-bootstrap-secrets
+
+              - name: SMTP_PROVIDER_DOMAIN
+                valueFrom:
+                  secretKeyRef:
+                    key: smtp-provider-domain
+                    name: rails-bootstrap-secrets
+
+              - name: SMTP_PROVIDER_USERNAME
+                valueFrom:
+                  secretKeyRef:
+                    key: smtp-provider-username
+                    name: rails-bootstrap-secrets
+
+              - name: SMTP_PROVIDER_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    key: smtp-provider-password
+                    name: rails-bootstrap-secrets
+              
+              # RAILS
+              - name: APPLICATION_HOSTNAME
+                value: 'www.example.com'
+
+              - name: DOMAIN_NAME
+                value: 'example.com'
+
+              - name: RAILS_ENV
+                value: 'production'
+              
+              - name: RAILS_LOG_LEVEL
+                value: 'warn'
+
+              - name: SECRET_KEY_BASE
+                valueFrom:
+                  secretKeyRef:
+                    key: keybase
+                    name: rails-bootstrap-secrets
+
+              - name: REQUIRE_RAILS_MASTER_KEY
+                value: 'false'
+
+              - name: RAILS_MASTER_KEY
+                valueFrom:
+                  secretKeyRef:
+                    key: rails-master-key
+                    name: rails-bootstrap-secrets
+              
+              - name: RAILS_SERVE_STATIC_FILES
+                value: 'true'
+              
+              - name: RAILS_ENFORCE_SSL
+                value: 'false'
+            
+            image: ''
+            name: rails-bootstrap
+            ports:
+              - containerPort: 8080
+
+            livenessProbe:
+              httpGet:
+                path: /status/alive
+                port: 8080
+              initialDelaySeconds: 60
+              timeoutSeconds: 3
+            
+            readinessProbe:
+              httpGet:
+                path: /status/ready
+                port: 8080
+              initialDelaySeconds: 30
+              timeoutSeconds: 5
+            
+            resources:
+              limits:
+                memory: '256Mi'
+
+    triggers:
+      - type: ConfigChange
+      - imageChangeParams:
+          automatic: true
+          containerNames:
+            - rails-bootstrap
+          from:
+            kind: ImageStreamTag
+            name: 'rails-bootstrap:latest'
+        type: ImageChange
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: Exposes and load balances the application pods
+      service.alpha.openshift.io/dependencies: '[{"name": "db", "kind": "Service"}]'
+    name: rails-bootstrap
+    labels:
+      app: rails-bootstrap
+  spec:
+    ports:
+      - name: web
+        port: 8080
+        targetPort: 8080
+    selector:
+      name: rails-bootstrap
+
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: www
+    labels:
+      app: rails-bootstrap
+  spec:
+    #host: 'www.example.com'
+    to:
+      kind: Service
+      name: rails-bootstrap
+      
+kind: List
+metadata: []
