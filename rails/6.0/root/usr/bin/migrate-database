@@ -8,9 +8,9 @@ RAKE_DB_INIT=${RAKE_DB_INIT:-"false"}
 unset VERSION
 
 if [ "$RAKE_DB_INIT" == "false" ]; then
-  echo "---> Executing bundle exec 'rake db:migrate' ..."
+  echo "---> Executing 'rake db:migrate' ..."
   bundle exec rake db:migrate
 else
-  echo "---> Executing bundle exec 'rake db:setup' ..."
+  echo "---> Executing 'rake db:setup' ..."
   bundle exec rake db:setup
 fi

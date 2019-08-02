@@ -25,8 +25,17 @@ mv /tmp/src/* ./
 
 echo "---> Adding database.yaml ..."
 rm ./config/database.yml
-cp /opt/app-root/database.yml ./config/database.yml
+DATABASE = `grep mysql Gemfile`
+f [ "$DATABASE" == "" ]; then
+  echo "---> Using Postgresql database.yaml template ..."
+  cp /opt/app-root/database.pg.yml ./config/database.yml
+else
+  echo "---> Using MySQL database.yaml template ..."
+  cp /opt/app-root/database.mysql.yml ./config/database.yml
+fi
 
+gem env
+ 
 echo "---> Building your Ruby application from source ..."
 if [ -f Gemfile ]; then
   ADDTL_BUNDLE_ARGS="--retry 2"
