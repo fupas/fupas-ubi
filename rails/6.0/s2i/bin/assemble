@@ -32,23 +32,17 @@ else
   cp -f /opt/app-root/database.mysql.yml ./config/database.yml
 fi
 
-gem env
-gem list
-
 echo "---> Building your Ruby application from source ..."
 if [ -f Gemfile ]; then
   ADDTL_BUNDLE_ARGS="--retry 2"
-  echo "BP1"
+  
   if [ -f Gemfile.lock ]; then
-    echo "BP2"
-
     if [[ "$BUNDLE_WITHOUT_DEPLOYMENT" == "true" ]]; then
       echo "---> Building without '--deployment' option ..."
     else
       ADDTL_BUNDLE_ARGS+=" --deployment"
     fi
   fi
-  echo "BP3"
   
   if [[ "$RAILS_ENV" == "development" || "$RACK_ENV" == "development" ]]; then
     BUNDLE_WITHOUT=${BUNDLE_WITHOUT:-"test"}
