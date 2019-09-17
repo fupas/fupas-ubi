@@ -2,7 +2,7 @@
 This container image includes Ruby 2.5 as a [S2I](https://github.com/openshift/source-to-image) base image for your RAILS 6.0 applications.
 
 ```bash
-docker build -t ubi8/rails:6.0 -f Dockerfile.local .
+docker build -t ubi8/rails:6.0 -f Dockerfile.rhel8 .
 ```
 
 or
