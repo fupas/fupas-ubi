@@ -28,12 +28,12 @@ items:
       git:
         uri: 'https://github.com/fupas/fupas-ubi.git'
         ref: 'master'
-      contextDir: 'rails/5'
+      contextDir: 'rails'
     
     strategy:
       type: Docker
       dockerStrategy:
-        dockerfilePath: Dockerfile
+        dockerfilePath: 5/Dockerfile
         forcePull: true
     
     output:
