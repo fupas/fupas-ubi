@@ -7,7 +7,6 @@ EXPOSE 8080
 
 ENV RUBY_MAJOR_VERSION=2 \
     RUBY_MINOR_VERSION=6 \
-    RAILS_VERSION='6.0.0' \
     BUNDLER_VERSION='2.1.4' \
     YARN_VERSION='1.22.4' \
     BUNDLE_DIR='./bundle' \
@@ -23,10 +22,10 @@ ENV RUBY_VERSION="${RUBY_MAJOR_VERSION}.${RUBY_MINOR_VERSION}" \
     RUBY_SCL_NAME_VERSION="${RUBY_MAJOR_VERSION}${RUBY_MINOR_VERSION}"
 
 ENV RUBY_SCL="ruby-${RUBY_SCL_NAME_VERSION}" \
-    IMAGE_NAME="fupas/rails-${RAILS_VERSION}" \
-    SUMMARY="Platform for building and running RAILS $RAILS_VERSION applications" \
+    IMAGE_NAME="fupas/rails-${RUBY_VERSION}" \
+    SUMMARY="Platform for building and running RAILS applications" \
     DESCRIPTION="Ruby $RUBY_VERSION available as container is a base platform for \
-building and running various RAIL $RAILS_VERSION applications and frameworks. \
+building and running various RAIL applications and frameworks. \
 Ruby is the interpreted scripting language for quick and easy object-oriented programming. \
 It has many features to process text files and to do system management tasks (as in Perl). \
 It is simple, straight-forward, and extensible."
@@ -85,9 +84,8 @@ RUN chown -R 1001:0 ${APP_ROOT} && chmod -R ug+rwx ${APP_ROOT} && \
 
 USER 1001
 
-# Install bundler & RAILS
+# Install bundler
 RUN gem install bundler -v $BUNDLER_VERSION --no-document
-RUN gem install rails -v $RAILS_VERSION --no-document
 
 # Set the default CMD to print the usage of the language image
 CMD $STI_SCRIPTS_PATH/usage

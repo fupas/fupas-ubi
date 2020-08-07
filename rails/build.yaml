@@ -5,9 +5,9 @@ items:
 - kind: BuildConfig
   apiVersion: 'v1'
   metadata:
-    name: 'fupas-rails5'
+    name: 'fupas-rails'
     annotations:
-      description: RAILS 5.2 base image for everything
+      description: RAILS base image for everything
       tags: ruby rails
     labels:
       runtime: ruby
@@ -33,21 +33,21 @@ items:
     strategy:
       type: Docker
       dockerStrategy:
-        dockerfilePath: 5/Dockerfile
+        dockerfilePath: Dockerfile
         forcePull: true
     
     output:
       to:
         kind: ImageStreamTag
-        name: 'fupas-rails5:5.2'
+        name: 'fupas-rails:2.6'
         #namespace: openshift
 
 - kind: ImageStream
   apiVersion: 'v1'
   metadata:
-    name: 'fupas-rails5'
+    name: 'fupas-rails'
     annotations:
-      description: RAILS5 base image for everything
+      description: RAILS base image for everything
       tags: ruby rails
     labels:
       runtime: ruby
