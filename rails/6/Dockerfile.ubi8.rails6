@@ -10,7 +10,7 @@ ENV RUBY_MAJOR_VERSION=2 \
     RAILS_VERSION='6.0.0' \
     BUNDLER_VERSION='2.0.2' \
     YARN_VERSION='1.17.3' \
-    BUNDLE_DIR='./bundle'
+    BUNDLE_DIR='./bundle' \
     PUMA_OPTIONS='--config ../etc/puma.cfg'
 
 ENV NODEJS_VERSION=10 \
