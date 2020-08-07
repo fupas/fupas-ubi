@@ -23,7 +23,7 @@ ENV RUBY_VERSION="${RUBY_MAJOR_VERSION}.${RUBY_MINOR_VERSION}" \
     RUBY_SCL_NAME_VERSION="${RUBY_MAJOR_VERSION}${RUBY_MINOR_VERSION}"
 
 ENV RUBY_SCL="ruby-${RUBY_SCL_NAME_VERSION}" \
-    IMAGE_NAME="ubi8/rails-${RAILS_VERSION}" \
+    IMAGE_NAME="fupas/rails-${RAILS_VERSION}" \
     SUMMARY="Platform for building and running RAILS $RAILS_VERSION applications" \
     DESCRIPTION="Ruby $RUBY_VERSION available as container is a base platform for \
 building and running various RAIL $RAILS_VERSION applications and frameworks. \
@@ -74,10 +74,10 @@ RUN npm install yarn@$YARN_VERSION -g
 RUN yum -y update
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
-COPY ../s2i/bin/ $STI_SCRIPTS_PATH
+COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 
 # Copy extra files to the image.
-COPY ../root/ /
+COPY ./root/ /
 
 # Drop the root user and make the content of /opt/app-root owned by user 1001
 RUN chown -R 1001:0 ${APP_ROOT} && chmod -R ug+rwx ${APP_ROOT} && \

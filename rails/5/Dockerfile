@@ -23,7 +23,7 @@ ENV RUBY_VERSION="${RUBY_MAJOR_VERSION}.${RUBY_MINOR_VERSION}" \
     RUBY_SCL_NAME_VERSION="${RUBY_MAJOR_VERSION}${RUBY_MINOR_VERSION}"
 
 ENV RUBY_SCL="ruby-${RUBY_SCL_NAME_VERSION}" \
-    IMAGE_NAME="ubi8/rails-${RAILS_VERSION}" \
+    IMAGE_NAME="fupas/rails-${RAILS_VERSION}" \
     SUMMARY="Platform for building and running RAILS $RAILS_VERSION applications" \
     DESCRIPTION="Ruby $RUBY_VERSION available as container is a base platform for \
 building and running various RAIL $RAILS_VERSION applications and frameworks. \
@@ -87,7 +87,7 @@ USER 1001
 
 # Install bundler & RAILS
 RUN gem install bundler -v $BUNDLER_VERSION --no-document
-RUN bundle add rails RAILS_VERSION
+RUN bundle add rails $RAILS_VERSION
 
 # Set the default CMD to print the usage of the language image
 CMD $STI_SCRIPTS_PATH/usage
