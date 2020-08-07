@@ -13,4 +13,3 @@ items:
         storage: '1Gi'
 
 kind: List
-metadata: []
