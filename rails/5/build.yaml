@@ -5,7 +5,7 @@ items:
 - kind: BuildConfig
   apiVersion: 'v1'
   metadata:
-    name: 'ubi8-rails'
+    name: 'fupas-rails5'
     annotations:
       description: RAILS 5.2 base image for everything
       tags: ruby rails
@@ -28,24 +28,24 @@ items:
       git:
         uri: 'https://github.com/fupas/fupas-ubi.git'
         ref: 'master'
-      contextDir: 'rails/6'
+      contextDir: 'rails/5'
     
     strategy:
       type: Docker
       dockerStrategy:
-        dockerfilePath: Dockerfile.rails52
+        dockerfilePath: Dockerfile
         forcePull: true
     
     output:
       to:
         kind: ImageStreamTag
-        name: 'ubi8-rails:5.2'
+        name: 'fupas-rails5:5.2'
         #namespace: openshift
 
 - kind: ImageStream
   apiVersion: 'v1'
   metadata:
-    name: 'ubi8-rails'
+    name: 'fupas-rails5'
     annotations:
       description: RAILS5 base image for everything
       tags: ruby rails
