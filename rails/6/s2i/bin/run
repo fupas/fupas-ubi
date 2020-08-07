@@ -1,6 +1,9 @@
 #!/bin/bash
 
 function is_puma_installed() {
+  if [ -n "$PUMA_DISABLED" ]; then
+    return 1
+  fi
   [ ! -f Gemfile.lock ] && return 1
   grep ' puma ' Gemfile.lock >/dev/null
 }
@@ -30,11 +33,6 @@ export RACK_ENV=${RACK_ENV:-"production"}
 
 if is_puma_installed; then
   export_vars=$(cgroup-limits) ; export $export_vars
-  
-  echo "DEBUG"
-  pwd
-  ls -la
-
   exec bundle exec "puma ${PUMA_OPTIONS}"
 else
   echo "You might consider adding 'puma' into your Gemfile."
