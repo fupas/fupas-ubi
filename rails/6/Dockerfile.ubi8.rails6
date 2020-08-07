@@ -13,7 +13,7 @@ ENV RUBY_MAJOR_VERSION=2 \
     BUNDLE_DIR='./bundle' \
     PUMA_OPTIONS='--config ../etc/puma.cfg'
 
-ENV NODEJS_VERSION=12 \
+ENV NODEJS_VERSION=10 \
     NPM_RUN=start \
     NAME=nodejs \
     NPM_CONFIG_PREFIX=$HOME/.npm-global \
@@ -69,6 +69,9 @@ RUN yum -y module enable nodejs:$NODEJS_VERSION && \
     
 # Install yarn
 RUN npm install yarn@$YARN_VERSION -g
+
+# Update the image
+RUN yum -y update
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
