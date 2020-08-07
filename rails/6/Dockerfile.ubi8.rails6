@@ -6,14 +6,14 @@ FROM registry.access.redhat.com/ubi8/s2i-base
 EXPOSE 8080
 
 ENV RUBY_MAJOR_VERSION=2 \
-    RUBY_MINOR_VERSION=5 \
+    RUBY_MINOR_VERSION=6 \
     RAILS_VERSION='6.0.0' \
-    BUNDLER_VERSION='2.0.2' \
-    YARN_VERSION='1.17.3' \
+    BUNDLER_VERSION='2.1.4' \
+    YARN_VERSION='1.22.4' \
     BUNDLE_DIR='./bundle' \
     PUMA_OPTIONS='--config ../etc/puma.cfg'
 
-ENV NODEJS_VERSION=10 \
+ENV NODEJS_VERSION=12 \
     NPM_RUN=start \
     NAME=nodejs \
     NPM_CONFIG_PREFIX=$HOME/.npm-global \
