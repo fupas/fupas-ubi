@@ -7,7 +7,7 @@ EXPOSE 8080
 
 ENV RUBY_MAJOR_VERSION=2 \
     RUBY_MINOR_VERSION=6 \
-    RAILS_VERSION='5.2.0' \
+    RAILS_VERSION='5.2' \
     BUNDLER_VERSION='2.1.4' \
     YARN_VERSION='1.22.4' \
     BUNDLE_DIR='./bundle' \
@@ -87,7 +87,7 @@ USER 1001
 
 # Install bundler & RAILS
 RUN gem install bundler -v $BUNDLER_VERSION --no-document
-RUN bundle add rails $RAILS_VERSION
+RUN gem install rails -v $RAILS_VERSION --no-document
 
 # Set the default CMD to print the usage of the language image
 CMD $STI_SCRIPTS_PATH/usage

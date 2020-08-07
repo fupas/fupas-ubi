@@ -87,6 +87,7 @@ USER 1001
 
 # Install bundler & RAILS
 RUN gem install bundler -v $BUNDLER_VERSION --no-document
+RUN gem install rails -v $RAILS_VERSION --no-document
 
 # Set the default CMD to print the usage of the language image
 CMD $STI_SCRIPTS_PATH/usage
