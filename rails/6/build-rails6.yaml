@@ -33,7 +33,7 @@ items:
     strategy:
       type: Docker
       dockerStrategy:
-        dockerfilePath: Dockerfile.ubi8.rails6
+        dockerfilePath: Dockerfile.rails6
         forcePull: true
     
     output:
@@ -47,7 +47,7 @@ items:
   metadata:
     name: 'ubi8-rails'
     annotations:
-      description: RAILS base image for everything
+      description: RAILS6 base image for everything
       tags: ruby rails
     labels:
       runtime: ruby
