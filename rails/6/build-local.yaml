@@ -26,21 +26,21 @@ items:
     
     source: 
       git:
-        uri: 'https://github.com/majordomusio/openshift-ubi.git'
+        uri: 'https://github.com/fupas/fupas-ubi.git'
         ref: 'master'
-      contextDir: 'rails/6.0'
+      contextDir: 'rails/6'
     
     strategy:
       type: Docker
       dockerStrategy:
-        dockerfilePath: Dockerfile.rhel8
+        dockerfilePath: Dockerfile.ubi8.rails6
         forcePull: true
     
     output:
       to:
         kind: ImageStreamTag
-        name: 'ubi8-rails:6.0'
-        namespace: openshift
+        name: 'ubi8-rails:6.0.0'
+        #namespace: openshift
 
 - kind: ImageStream
   apiVersion: 'v1'
@@ -51,4 +51,4 @@ items:
       tags: ruby rails
     labels:
       runtime: ruby
-    namespace: openshift
+    #namespace: openshift
